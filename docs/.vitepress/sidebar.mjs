@@ -13,8 +13,12 @@ export const sidebar = {
         },
         {
           text: "模式",
-          link: "/basic/mod"
-        }
+          link: "/basic/mod",
+        },
+        {
+          text: "命令",
+          link: "/basic/command",
+        },
       ],
     },
   ],

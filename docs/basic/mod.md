@@ -56,6 +56,8 @@ export GO111MODULE=on
 
 ### 使用`go mod`初始化项目
 
+开发者不需要将项目放到`$GOPATH/src`下了, 随便哪个位置都可以放.
+
 ::: details 例子
 主要使用`go mod init`来初始化项目, 例如创建新的项目目录`go-demo1`和`go-demo2`, 需要执行以下命令:
 ```bash
