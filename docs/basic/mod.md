@@ -91,7 +91,7 @@ go 1.22.6
     3. 找不到包, 从远程下载, 并保存在`$GOPATH/pkg/mod/`下的某个文件夹中并使用
 - 不管是否有`vendor`文件夹, `go get`下载的包都会被放到`$GOPATH/pkg/mod/`的某个文件夹下
 - `vendor`目录允许你将项目的所有依赖包本地化. 如果项目中存在`vendor`目录, 会直接使用`vendor`中的包. 这在没有网络连接的时候特别好用
-- 通过`go mod tidy`或者`go mod vendor`可以将所有的依赖包都复制到`vendor`目录下
+- 通过`go mod vendor`可以将所有的依赖包都放到`vendor`目录下
 :::
 
 ::: details 例子
