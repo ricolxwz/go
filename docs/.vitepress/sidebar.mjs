@@ -19,6 +19,10 @@ export const sidebar = {
           text: "命令",
           link: "/basic/command",
         },
+        {
+          text: "结构",
+          link: "/basic/structure",
+        },
       ],
     },
   ],

@@ -12,5 +12,9 @@ footer: true
 
 # 瞬移
 
-- ⭕ 基础
-    - ⭕ [简介](/basic/intro)
+- ✅ 基础
+    - ✅ [简介](/basic/intro)
+    - ✅ [安装](/basic/install)
+    - ✅ [模式](/basic/mod)
+    - ✅ [命令](/basic/command)
+    - ✅ [结构](/basic/structure)
