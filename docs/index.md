@@ -3,8 +3,8 @@
 layout: home
 
 hero:
-  name: "GO, GO, GO!"
-  text: "专属于GO语言的文档"
+  name: "Go, Go, Go!"
+  text: "专属于Go语言的文档"
   tagline: 总能找到你想要的东西🫰
   image:
     src: /favicon-vitepress-3.svg

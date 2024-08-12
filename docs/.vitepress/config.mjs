@@ -4,8 +4,8 @@ import { sidebar } from './sidebar.mjs'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "GO文档",
-  description: "专属GO语言的文档",
+  title: "Go文档",
+  description: "专属Go语言的文档",
   lastUpdated: true,
   lang: "zh_Hans",
   // ignoreDeadLinks: true,

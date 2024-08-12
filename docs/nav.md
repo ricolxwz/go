@@ -13,4 +13,4 @@ footer: true
 # 瞬移
 
 - ⭕ 基础
-    - ⭕ [导航](/basic/)
+    - ⭕ [简介](/basic/intro)
