@@ -25,3 +25,4 @@ footer: true
         - ✅ [类型](/basic/type)
         - ✅ [数组](/basic/array)
         - ✅ [切片](/basic/slice)
+        - ✅ [指针](/basic/pointer)

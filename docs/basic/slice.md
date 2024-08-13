@@ -42,7 +42,7 @@ func main() {
 }
 ```
 执行结果为:
-```bash
+```
 0xc000010018
 0xc000010030
 [0] [0]
@@ -87,14 +87,17 @@ func main() {
 ```
 :::
 
-## 切片追加
+## 追加
 
 可以使用`append`内置函数追加切片.
+
+```
+append(<slice>, <item1>, <item2>, ...)
+```
 
 ::: details
 ```go
 func main() {
-
     var a = []int{1, 2, 3}
     fmt.Printf("slice a : %v\n", a)
     var b = []int{4, 5, 6}
@@ -110,6 +113,14 @@ func main() {
 :::
 
 ::: tip
+- 可以使用`...`运算符将某个切片展开
+    ::: details
+    ```go
+    s2 := make([]int, 10)
+    s3 := []int{1, 2, 3}
+    fmt.Printf("slice s3 : %v\n", s3)
+    s3 = append(s3, s2...)
+    ```
 - 若超出原切片的容量, 会重新分配底层数组, 即使原数组并未填满.
     ::: details
     ```go
@@ -124,7 +135,7 @@ func main() {
     }
     ```
     执行结果为:
-    ```bash
+    ```
     [0 1]
     0xc00001a180 0xc00001a180
     [0 1 100 200] [0 1 2 3 4 0 0 0 0 0 0]
@@ -133,3 +144,115 @@ func main() {
     可以看到超出容量的扩容后指向的底层数组不是同一个了.
     :::
 - 容量经过重新分配之后会变成原来的两倍
+:::
+
+## 拷贝
+
+`copy`函数用于在两个切片之间复制数据. 复制部分的长度以长度较小的切片为准. 
+
+```
+copy(<dst_slice>, <src_slice>)
+```
+
+::: details
+```go
+func main() {
+    data := [...]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+    fmt.Println("array data : ", data)
+    s1 := data[8:]
+    s2 := data[:5]
+    fmt.Printf("slice s1 : %v\n", s1)
+    fmt.Printf("slice s2 : %v\n", s2)
+    copy(s2, s1)
+    fmt.Printf("copied slice s1 : %v\n", s1)
+    fmt.Printf("copied slice s2 : %v\n", s2)
+    fmt.Println("last array data : ", data)
+}
+```
+执行结果为:
+```
+array data :  [0 1 2 3 4 5 6 7 8 9]
+slice s1 : [8 9]
+slice s2 : [0 1 2 3 4]
+copied slice s1 : [8 9]
+copied slice s2 : [8 9 2 3 4]
+last array data :  [8 9 2 3 4 5 6 7 8 9]
+```
+再来个例子:
+```go
+func main() {
+    s1 := []int{1, 2, 3}
+    s2 := []int{4, 5, 6, 7}
+    copy(s2, s1)
+    fmt.Println(s1)
+    fmt.Println(s2)
+    s3 := []int{1, 2, 3}
+    s4 := []int{4, 5, 6, 7}
+    copy(s3, s4)
+    fmt.Println(s3)
+    fmt.Println(s4)
+}
+```
+执行结果为:
+```
+[1 2 3]
+[1 2 3 7]
+[4 5 6]
+[4 5 6 7]
+```
+:::
+
+::: tip
+应及时将所需数据`copy`到较小的切片, 以便释放超大号底层数组内存.
+:::
+
+## 遍历
+
+和[数组的遍历](/basic/array#遍历)相同.
+
+## 调整大小
+
+切片可以进行伸缩调整大小.
+
+::: details
+```go
+func main() {
+    var a = []int{1, 3, 4, 5}
+    fmt.Printf("slice a : %v , len(a) : %v\n", a, len(a))
+    b := a[1:2]
+    fmt.Printf("slice b : %v , len(b) : %v\n", b, len(b))
+    c := b[0:3]
+    fmt.Printf("slice c : %v , len(c) : %v\n", c, len(c))
+}
+```
+执行结果:
+```
+slice a : [1 3 4 5] , len(a) : 4
+slice b : [3] , len(b) : 1
+slice c : [3 4 5] , len(c) : 3
+```
+:::
+
+## 字符串切片
+
+字符串底层就是一个byte数组, 因此, 也可以进行切片操作.
+
+::: details
+```go
+func main() {
+    str := "hello world"
+    s1 := str[0:5]
+    fmt.Println(s1)
+
+    s2 := str[6:]
+    fmt.Println(s2)
+}
+```
+执行结果:
+```
+hello
+world
+```
+:::
+
+修改字符串详情见[这里](/basic/type#修改字符串).

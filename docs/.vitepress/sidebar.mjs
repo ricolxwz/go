@@ -48,6 +48,10 @@ export const sidebar = {
           text: "切片",
           link: "/basic/slice",
         },
+        {
+          text: "指针",
+          link: "/basic/pointer",
+        },
       ],
     },
   ],
