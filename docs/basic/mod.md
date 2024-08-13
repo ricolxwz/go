@@ -50,7 +50,7 @@ go env -w GO111MODULE=on
 
 或者也可以通过改写`.bashrc`实现:
 
-```bashrc
+```
 export GO111MODULE=on
 ```
 
