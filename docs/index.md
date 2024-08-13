@@ -15,7 +15,7 @@ hero:
       link: nav
     - theme: alt
       text: 基础
-      link: /basic/
+      link: /basic/intro
 
 features:
   - title: 🍳 语法简洁

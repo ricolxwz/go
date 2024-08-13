@@ -25,5 +25,26 @@ export const sidebar = {
         },
       ],
     },
+    {
+      text: "初级",
+      items: [
+        {
+          text: "下划线",
+          link: "/basic/underline",
+        },
+        {
+          text: "变量和常量",
+          link: "/basic/var",
+        },
+        {
+          text: "类型",
+          link: "/basic/type",
+        },
+        {
+          text: "数组",
+          link: "/basic/array",
+        },
+      ],
+    },
   ],
 };

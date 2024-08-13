@@ -1,6 +1,6 @@
-import { defineConfig } from 'vitepress'
-import { nav } from './nav.mjs'
-import { sidebar } from './sidebar.mjs'
+import { defineConfig } from "vitepress";
+import { nav } from "./nav.mjs";
+import { sidebar } from "./sidebar.mjs";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -10,69 +10,84 @@ export default defineConfig({
   lang: "zh_Hans",
   // ignoreDeadLinks: true,
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon-vitepress-noeffect-3.svg' }],
-    ['link', { rel: 'icon', type: 'image/png', href: '/favicon-vitepress-noeffect-3.png' }]
+    [
+      "link",
+      {
+        rel: "icon",
+        type: "image/svg+xml",
+        href: "/favicon-vitepress-noeffect-3.svg",
+      },
+    ],
+    [
+      "link",
+      {
+        rel: "icon",
+        type: "image/png",
+        href: "/favicon-vitepress-noeffect-3.png",
+      },
+    ],
   ],
   markdown: {
     image: {
-      lazyLoading: true
+      lazyLoading: true,
     },
-    math: true
+    math: true,
+    container: {
+      detailsLabel: "EXAMPLE",
+    },
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: '/favicon-vitepress-noeffect-3.png',
+    logo: "/favicon-vitepress-noeffect-3.png",
     search: {
-      provider: 'local',
+      provider: "local",
       options: {
         translations: {
           button: {
-            buttonText: '搜索文档',
-            buttonAriaLabel: '搜索文档'
+            buttonText: "搜索文档",
+            buttonAriaLabel: "搜索文档",
           },
           modal: {
-            noResultsText: '无法找到相关结果',
-            resetButtonTitle: '清除查询条件',
+            noResultsText: "无法找到相关结果",
+            resetButtonTitle: "清除查询条件",
             footer: {
-              selectText: '选择',
-              navigateText: '切换'
-            }
-          }
-        }
-      }
+              selectText: "选择",
+              navigateText: "切换",
+            },
+          },
+        },
+      },
     },
     editLink: {
-      pattern: 'https://github.com/vuejs/vitepress/edit/main/docs/:path',
-      text: '在 GitHub 上编辑此页面'
+      pattern: "https://github.com/vuejs/vitepress/edit/main/docs/:path",
+      text: "在 GitHub 上编辑此页面",
     },
     docFooter: {
-      prev: '上一页',
-      next: '下一页'
+      prev: "上一页",
+      next: "下一页",
     },
     outline: {
-      label: '页面导航'
+      label: "页面导航",
     },
     lastUpdatedText: "📑 最后更新于",
-    langMenuLabel: '多语言',
-    returnToTopLabel: '回到顶部',
-    sidebarMenuLabel: '菜单',
-    darkModeSwitchLabel: '主题',
-    lightModeSwitchTitle: '切换到浅色模式',
-    darkModeSwitchTitle: '切换到深色模式',
+    langMenuLabel: "多语言",
+    returnToTopLabel: "回到顶部",
+    sidebarMenuLabel: "菜单",
+    darkModeSwitchLabel: "主题",
+    lightModeSwitchTitle: "切换到浅色模式",
+    darkModeSwitchTitle: "切换到深色模式",
     // nav: [
-    //   { 
-    //     text: 'Leetcode', 
+    //   {
+    //     text: 'Leetcode',
     //     link: '/leetcode/'
     //   },
     // ],
     nav,
     sidebar,
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/ricolxwz' }
-    ],
+    socialLinks: [{ icon: "github", link: "https://github.com/ricolxwz" }],
     footer: {
-      message: '基于 MIT 许可发布',
-      copyright: '版权所有 © 2024-至今 许文泽 ♥️'
-    }
-  }
-})
+      message: "基于 MIT 许可发布",
+      copyright: "版权所有 © 2024-至今 许文泽 ♥️",
+    },
+  },
+});
