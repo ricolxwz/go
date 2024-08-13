@@ -23,6 +23,7 @@ footer: true
 ```
 
 ::: details
+```go
 func main() {
     a := 10
     b := &a
@@ -30,6 +31,7 @@ func main() {
     fmt.Printf("b:%p type:%T\n", b, b) // b:0xc00001a078 type:*int
     fmt.Println(&b)                    // 0xc00000e018
 }
+```
 :::
 
 ## 指针类型
