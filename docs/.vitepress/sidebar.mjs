@@ -56,6 +56,18 @@ export const sidebar = {
           text: "映射",
           link: "/basic/map",
         },
+        {
+          text: "条件",
+          link: "/basic/condition",
+        },
+        {
+          text: "循环",
+          link: "/basic/loop",
+        },
+        {
+          text: "函数",
+          link: "/basic/function",
+        },
       ],
     },
   ],

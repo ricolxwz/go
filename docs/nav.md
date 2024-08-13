@@ -27,3 +27,6 @@ footer: true
         - ✅ [切片](/basic/slice)
         - ✅ [指针](/basic/pointer)
         - ✅ [映射](/basic/map)
+        - ✅ [条件](/basic/condition)
+        - ✅ [循环](/basic/loop)
+        - ✅ [函数](/basic/function)
