@@ -13,8 +13,15 @@ footer: true
 # 瞬移
 
 - ✅ 基础
-    - ✅ [简介](/basic/intro)
-    - ✅ [安装](/basic/install)
-    - ✅ [模式](/basic/mod)
-    - ✅ [命令](/basic/command)
-    - ✅ [结构](/basic/structure)
+    - ✅ 绪论
+        - ✅ [简介](/basic/intro)
+        - ✅ [安装](/basic/install)
+        - ✅ [模式](/basic/mod)
+        - ✅ [命令](/basic/command)
+        - ✅ [结构](/basic/structure)
+    - ✅ 初级
+        - ✅ [下划线](/basic/underline)
+        - ✅ [变量和常量](/basic/var)
+        - ✅ [类型](/basic/type)
+        - ✅ [数组](/basic/array)
+        - ✅ [切片](/basic/slice)

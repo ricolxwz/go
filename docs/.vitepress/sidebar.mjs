@@ -44,6 +44,10 @@ export const sidebar = {
           text: "数组",
           link: "/basic/array",
         },
+        {
+          text: "切片",
+          link: "/basic/slice",
+        },
       ],
     },
   ],
