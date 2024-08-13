@@ -26,3 +26,4 @@ footer: true
         - ✅ [数组](/basic/array)
         - ✅ [切片](/basic/slice)
         - ✅ [指针](/basic/pointer)
+        - ✅ [映射](/basic/map)

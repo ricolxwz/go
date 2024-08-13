@@ -52,6 +52,10 @@ export const sidebar = {
           text: "指针",
           link: "/basic/pointer",
         },
+        {
+          text: "映射",
+          link: "/basic/map",
+        },
       ],
     },
   ],
