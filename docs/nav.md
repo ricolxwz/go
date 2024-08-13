@@ -29,4 +29,5 @@ footer: true
         - ✅ [映射](/basic/map)
         - ✅ [条件](/basic/condition)
         - ✅ [循环](/basic/loop)
+        - ✅ [结构体](/basic/struct)
         - ✅ [函数](/basic/function)

@@ -65,6 +65,10 @@ export const sidebar = {
           link: "/basic/loop",
         },
         {
+          text: "结构体",
+          link: "/basic/struct",
+        },
+        {
           text: "函数",
           link: "/basic/function",
         },
