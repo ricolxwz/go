@@ -134,3 +134,22 @@ func main() {
 }
 ```
 :::
+
+## 只有键的map
+
+在Go中, 若你只关心键是否存在, 而不关心值, 可以将值类型定义为一个空结构体类型`struct{}`. 每个实际的值都是空结构体的一个实例. `struct{}{}`在内存中不占用任何空间, 大小为0字节.
+
+::: details
+```go
+keysMap := make(map[string]struct{})
+
+keysMap["key1"] = struct{}{}
+keysMap["key2"] = struct{}{}
+keysMap["key3"] = struct{}{}
+
+_, exists := keysMap["key1"]
+if exists {
+    fmt.Println("key1 exists in the map")
+}
+```
+:::

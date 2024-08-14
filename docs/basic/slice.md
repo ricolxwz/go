@@ -61,6 +61,9 @@ func main() {
     ```
     make(<type>, <len>, <cap>)
     ```
+    ::: warning
+    使用`make`函数初始化切片一定要提供切片的长度, 不然会报错
+    :::
 - 现存数组的切片
     ```
     <arr>[<start>:<end>:<cap>]
