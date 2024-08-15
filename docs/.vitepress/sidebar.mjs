@@ -72,6 +72,10 @@ export const sidebar = {
           text: "函数",
           link: "/basic/function",
         },
+        {
+          text: "异常",
+          link: "/basic/error",
+        },
       ],
     },
   ],
