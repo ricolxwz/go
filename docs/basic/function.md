@@ -97,6 +97,10 @@ func main() {
 - 返回值不能用容器对象接受, 只能用多个变量, 或者使用下划线忽略
 :::
 
+::: warning
+带有表达式的`return`语句不是原子指令! 如`return <expression>`, 会先给返回值赋予`<expression>`的结果, 然后再返回. 这会影响到延迟调用, 因为在延迟调用中, 有可能会修改返回值的值. 在[延迟调用](#延迟调用)中, 先给返回值赋值, 然后再调用`defer`表达式, 最后才是真正的返回. 具体的例子见[这里](#延迟调用返回例子). 
+:::
+
 ### 无返回值
 
 这是最简单的形式, 函数不返回任何值, 也不用在函数内写`return`语句.
@@ -150,37 +154,6 @@ func divide(a, b float64) (quotient, remainder float64) {
     quotient = a / b
     remainder = a - quotient*b
     return // 返回 quotient 和 remainder
-}
-```
-:::
-
-::: tip
-当使用命名返回值的时候, 若不适用裸返回, 而使用`return`返回, `return`语句会先将表达式的结果赋值给返回变量, 然后再返回.
-::: details
-```go
-func add(x, y int) (z int) {
-    defer func() {
-        println(z) // 输出: 203
-    }()
-    z = x + y
-    return z + 200 // [!code focus]
-}
-func main() {
-    println(add(1, 2)) // 输出: 203
-}
-```
-相当于:
-```go
-func add(x, y int) (z int) {
-    defer func() {
-        println(z) // 输出: 203
-    }()
-    z = x + y
-    z = z + 200 // [!code focus:2]
-    return
-}
-func main() {
-    println(add(1, 2)) // 输出: 203
 }
 ```
 :::
@@ -242,38 +215,46 @@ Middle
 
 `defer`语句执行的时间非常关键. 当程序遇到`defer`语句时, `defer`后面的函数将被注册, 但是不会立即执行. 相反, 它会被推入一个栈中, 等待函数即将返回时执行. 当函数即将返回的时候(无论是正常返回还是异常情况返回), 会按照LIFO的顺序执行已经注册的延迟执行函数. 
 
-::: details
+::: warning 
+前面提到了, 带有表达式的`return`语句不是原子指令! 如`return <expression>`, 会先给返回值赋予`<expression>`的结果, 然后再返回, 这会影响到延迟调用. 在延迟调用中, 先给返回值赋值, 然后再调用`defer`表达式, 最后才是真正的返回.
+::: details {#延迟调用返回例子}
+先来看例子1:
 ```go
-func add(x, y int) (z int) {
+func f() (result int) {
     defer func() {
-        println(z) // 输出: 203
+        result++
     }()
-
-    z = x + y
-    return z + 200 // 执行顺序: (z = z + 200) -> (call defer) -> (return)
-}
-func main() {
-    println(add(1, 2)) // 输出: 203
+    return 0
 }
 ```
-:::
-
-::: details
+含有表达式的`return`语句不是原子指令, 会先将`0`赋值给`result`, 然后再执行`defer`, 执行`defer`的过程中, 修改了返回值`result`, 然后最终才是真正的返回, 所以结果应该是`1`. 实际上, 可以将上面的`return`语句拆成两个部分, 来理解它:
+```
+返回值 = xxx
+调用defer函数
+空的return
+```
+再来看例子2:
 ```go
-func add(x, y int) (z int) {
-    defer func() {
-        z = z + 20
-        println(z) // 输出: 223
-    }()
-
-    z = x + y
-    return z + 200 // 执行顺序: (z = z + 200) -> (call defer) -> (return)
-}
-
-func main() {
-    println(add(1, 2)) // 输出: 223
+func f() (r int) {
+     t := 5
+     defer func() {
+       t = t + 5
+     }()
+     return t
 }
 ```
+含有表达式的`return`语句不是原子指令, 会先将`t`的值赋值给`r`, 即`5`, 然后再执行`defer`, 执行`defer`的过程中, 修改的是局部变量`t`, 而不是返回变量`r`, 所以结果应该是`5`.
+
+再来看例子3:
+```go
+func f() (r int) {
+    defer func(r int) {
+          r = r + 5
+    }(r)
+    return 1
+}
+```
+含有表达式的`return`语句不是原子指令, 会先将`1`赋值给`r`. 然后再执行`defer`, 执行`defer`的过程中, 传入了返回值`r`的值, 即`1`, 由于传递的是值, 所以`defer`调用函数内部的`r`和外面的`r`不是同一个, 只是一个拷贝, 所以实际上无法修改返回值`r`的值, 最终返回的是`1`.
 :::
 
 ## 闭包

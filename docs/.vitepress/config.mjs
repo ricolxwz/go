@@ -33,7 +33,11 @@ export default defineConfig({
     },
     math: true,
     container: {
-      detailsLabel: "EXAMPLE",
+      tipLabel: "提示",
+      warningLabel: "警告",
+      dangerLabel: "危险",
+      infoLabel: "信息",
+      detailsLabel: "例子",
     },
   },
   themeConfig: {
