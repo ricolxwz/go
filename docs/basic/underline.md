@@ -22,7 +22,7 @@ footer: true
 
 在其他语句中, 下划线的作用是忽略这个变量.  
 
-::: details EXAMPLE
+::: details
 比如导入一个文件, 普通的写法是:
 ```go
 f, err := os.Open("/Users/***/Desktop/text.txt")
