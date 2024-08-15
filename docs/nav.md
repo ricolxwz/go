@@ -45,3 +45,4 @@ footer: true
         - ✅ [循环](/basic/loop)
         - ✅ [结构体](/basic/struct)
         - ✅ [函数](/basic/function)
+        - ⭕ [错误和异常](/basic/error)

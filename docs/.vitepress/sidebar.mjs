@@ -73,7 +73,11 @@ export const sidebar = {
           link: "/basic/function",
         },
         {
-          text: "异常",
+          text: "接口",
+          link: "/basic/interface",
+        },
+        {
+          text: "错误和异常",
           link: "/basic/error",
         },
       ],

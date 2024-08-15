@@ -1,5 +1,5 @@
 ---
-title: Go异常处理
+title: Go错误和异常
 layout: doc
 navbar: true
 sidebar: true
@@ -10,4 +10,4 @@ editLink: true
 footer: true
 ---
 
-# 异常
+# 错误和异常
