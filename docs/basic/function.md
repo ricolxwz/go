@@ -33,5 +33,248 @@ func test(x, y int, s string) (int, string) {
 函数传递有两种方式, 值传递和引用传递, 无论是哪种传递方式, 传递给函数的都是变量的副本. 只不过, 值传递是值的拷贝, 引用传递是地址的拷贝.
 
 ::: tip
-一般来说, 地址拷贝更为高效, 因为值拷贝的时候传入的值太大的话, 会导致性能降低.
+- 一般来说, 地址拷贝更为高效, 因为值拷贝的时候传入的值太大的话, 会导致性能降低.
+- 函数是第一类公民, 可以作为参数传递
+    ::: details
+    ```go
+    func test(fn func() int) int {
+        return fn()
+    }
+    func main() {
+        s1 := test(func() int { return 100 })
+        println(s1) // 100
+    }
+    ```
+    :::
+- 可以将具有复杂签名的函数定义为函数类型, 传参的时候声明类型就用这个函数类型
+    ::: details
+    以下代码中, 函数签名`func (s string, x, y int) string`过于复杂, 将该函数作为参数传递声明类型的不怎么好写, 所以将其定义为一个类型.
+    ```go
+    type FormatFunc func(s string, x, y int) string
+    func format(fn FormatFunc, s string, x, y int) string {
+        return fn(s, x, y)
+    }
+    func main() {
+        s2 := format(func(s string, x, y ing) string {
+            return fmt.Sprintf(s, x, y)
+        }, "%d, %d", 10, 20)
+    }
+    println(s2) // 10, 20
+    ```
 :::
+
+### 变长参数
+
+一个函数的最后一个参数可以是变长参数. 一个函数最多可以有一个变长参数, 一个变长参数在函数内部被视为一个切片. 变长参数在声明的时候必须在它声明的元素类型前面前置三个点`...`, 表示这是一个变长参数. 这个`...`既可以表示解包又可以表示打包, 在参数中表示的是将传入的参数打包成一个切片.
+
+::: details
+```go
+func Sum(values ...int64) (sum int64) {
+	sum = 0
+	for _, v := range values {
+		sum += v
+	}
+	return
+}
+
+func main() {
+	a0 := Sum()
+	a1 := Sum(2)
+	a3 := Sum(2, 3, 5)
+	// 上面三行和下面三行是等价的, 下面是现将切片解包, 然后传入
+	b0 := Sum([]int64{}...) // <=> Sum(nil...)
+	b1 := Sum([]int64{2}...)
+	b3 := Sum([]int64{2, 3, 5}...)
+	fmt.Println(a0, a1, a3) // 0 2 10
+	fmt.Println(b0, b1, b3) // 0 2 10
+}
+```
+:::
+
+## 返回值
+
+::: tip
+- 返回值不能用容器对象接受, 只能用多个变量, 或者使用下划线忽略
+:::
+
+### 无返回值
+
+这是最简单的形式, 函数不返回任何值, 也不用在函数内写`return`语句.
+
+::: details
+```go
+func greet(name string) {
+    fmt.Println("Hello,", name)
+}
+```
+:::
+
+### 单个返回值
+
+函数返回一个单一的返回值. 返回值类型在函数签名中声明, `return`语句用来返回这个值, 必须写.
+
+::: details
+```go
+func square(x int) int {
+    return x * x
+}
+```
+:::
+
+### 多个返回值
+
+函数返回多个值, `return`语句看情况用来返回值.
+
+#### 无命名返回值
+
+必须用`return`语句返回无命名返回值.
+
+::: details
+```go
+func divide(a, b float64) (float64, error) {
+    if b == 0 {
+        return 0, fmt.Errorf("division by zero")
+    }
+    return a / b, nil
+}
+```
+:::
+
+#### 命名返回值
+
+函数返回值可以命名, 命名的返回值在函数体内可以直接使用(类似于局部变量), 可以借此简化`return`语句, 返回各个命名返回值的当前值, 这种返回称为"裸返回", 但是`return`是必须写的.
+
+::: details
+```go
+func divide(a, b float64) (quotient, remainder float64) {
+    quotient = a / b
+    remainder = a - quotient*b
+    return // 返回 quotient 和 remainder
+}
+```
+:::
+
+::: tip
+当使用命名返回值的时候, 若不适用裸返回, 而使用`return`返回, `return`语句会先将表达式的结果赋值给返回变量, 然后再返回.
+::: details
+```go
+func add(x, y int) (z int) {
+    defer func() {
+        println(z) // 输出: 203
+    }()
+    z = x + y
+    return z + 200 // [!code focus]
+}
+func main() {
+    println(add(1, 2)) // 输出: 203
+}
+```
+相当于:
+```go
+func add(x, y int) (z int) {
+    defer func() {
+        println(z) // 输出: 203
+    }()
+    z = x + y
+    z = z + 200 // [!code focus:2]
+    return
+}
+func main() {
+    println(add(1, 2)) // 输出: 203
+}
+```
+:::
+
+::: warning
+命名返回参数可被同名局部变量隐蔽, 此时需要显式返回.
+::: details
+```go
+func add(x, y int) (z int) {
+    { // 不能在一个级别, 引发 "z redeclared in this block" 错误
+        var z = x + y
+        // return   // Error: z is shadowed during return
+        return z // 必须显式返回
+    }
+}
+```
+:::
+
+## 匿名函数
+
+匿名函数是指不需要定义函数名的一种函数实现方式. Go中的匿名函数由一个不带函数名的函数声明和函数体组, 然后可以将其赋值给一个变量, 直接调用或者作为参数传递.
+
+::: details
+```go
+func main() {
+    getSqrt := func(a float64) float64 {
+        return math.Sqrt(a)
+    }
+    fmt.Println(getSqrt(4))
+}
+```
+:::
+
+## 延迟调用
+
+Go中, 延迟调用是一种在函数执行结束时, 延迟执行某些代码的机制. 延迟调用通常用于在函数返回前执行清理工作, 比如关闭文件, 解锁资源或者输出调试信息.
+
+`defer`关键字用于处理延迟调用, 后面应该跟着一个函数, 当包含多个`defer`的函数被调用时, 所有的`defer`语句将按照后进先出(LIFO)的顺序执行.
+
+::: details
+```go
+func main() {
+    fmt.Println("Start")
+
+    defer fmt.Println("Middle")
+    defer fmt.Println("End")
+
+    fmt.Println("Done")
+}
+```
+执行结果:
+```
+Start
+Done
+End
+Middle
+```
+:::
+
+`defer`语句执行的时间非常关键. 当程序遇到`defer`语句时, `defer`后面的函数将被注册, 但是不会立即执行. 相反, 它会被推入一个栈中, 等待函数即将返回时执行. 当函数即将返回的时候(无论是正常返回还是异常情况返回), 会按照LIFO的顺序执行已经注册的延迟执行函数. 
+
+::: details
+```go
+func add(x, y int) (z int) {
+    defer func() {
+        println(z) // 输出: 203
+    }()
+
+    z = x + y
+    return z + 200 // 执行顺序: (z = z + 200) -> (call defer) -> (return)
+}
+func main() {
+    println(add(1, 2)) // 输出: 203
+}
+```
+:::
+
+::: details
+```go
+func add(x, y int) (z int) {
+    defer func() {
+        z = z + 20
+        println(z) // 输出: 223
+    }()
+
+    z = x + y
+    return z + 200 // 执行顺序: (z = z + 200) -> (call defer) -> (return)
+}
+
+func main() {
+    println(add(1, 2)) // 输出: 223
+}
+```
+:::
+
+## 闭包
+
